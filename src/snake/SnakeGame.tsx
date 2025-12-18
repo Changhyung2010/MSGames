@@ -37,7 +37,7 @@ export function SnakeGame() {
 
         <div className="snake-controls">
           <div className="snake-counter">
-            <span className="snake-counter-label">Score</span>
+            <span className="snake-counter-label">Score:</span>
             <span className="snake-counter-value">{state.score}</span>
           </div>
           <button className="snake-reset" onClick={reset}>
