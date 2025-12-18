@@ -3,7 +3,7 @@ import { useSnake } from './useSnake'
 import './snake.css'
 
 export function SnakeGame() {
-  const { state, start, reset, changeDirection } = useSnake()
+  const { state, start, pause, reset, changeDirection } = useSnake()
 
   const statusText = useMemo(() => {
     switch (state.status) {
@@ -11,7 +11,7 @@ export function SnakeGame() {
         return 'Press any arrow key to start'
       case 'playing':
         return 'Use arrow keys to move'
-      case 'pause':
+      case 'paused':
         return 'Paused - Press space to resume'
       case 'gameOver':
         return `Game Over! Score: ${state.score} - Press space to restart`
@@ -95,10 +95,16 @@ export function SnakeGame() {
           </button>
           <button
             className="snake-direction-btn snake-direction-btn--center"
-            onClick={() => start()}
-            aria-label="Start/Pause"
+            onClick={() => {
+              if (state.status === 'playing') {
+                pause()
+              } else if (state.status === 'paused' || state.status === 'ready') {
+                start()
+              }
+            }}
+            aria-label={state.status === 'playing' ? 'Pause' : 'Start'}
           >
-            ⏸
+            {state.status === 'playing' ? '⏸' : '▶'}
           </button>
           <button
             className="snake-direction-btn"
